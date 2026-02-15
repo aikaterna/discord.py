@@ -4509,7 +4509,7 @@ class Guild(Hashable):
         )
 
     async def change_voice_state(
-        self, *, channel: Optional[abc.Snowflake], self_mute: bool = False, self_deaf: bool = False
+        self, *, channel: Optional[abc.Snowflake], self_mute: bool = False, self_deaf: bool = False, connection_id: Optional[str] = MISSING,
     ) -> None:
         """|coro|
 
@@ -4528,7 +4528,7 @@ class Guild(Hashable):
         """
         ws = self._state._get_websocket(self.id)
         channel_id = channel.id if channel else None
-        await ws.voice_state(self.id, channel_id, self_mute, self_deaf)
+        await ws.voice_state(self.id, channel_id, self_mute, self_deaf, connection_id)
 
     async def fetch_automod_rule(self, automod_rule_id: int, /) -> AutoModRule:
         """|coro|

@@ -751,6 +751,7 @@ class DiscordWebSocket:
         channel_id: Optional[int],
         self_mute: bool = False,
         self_deaf: bool = False,
+        connection_id: Optional[str] = utils.MISSING,
     ) -> None:
         payload = {
             'op': self.VOICE_STATE,
@@ -761,6 +762,8 @@ class DiscordWebSocket:
                 'self_deaf': self_deaf,
             },
         }
+        if connection_id is not utils.MISSING:
+            payload['d']['connection_id'] = connection_id
 
         _log.debug('Updating our voice state to %s.', payload)
         await self.send_as_json(payload)
